@@ -1,1 +1,1 @@
-web: gunicorn kycapi.wsgi --log-file -
+web: gunicorn api.wsgi --log-file -
