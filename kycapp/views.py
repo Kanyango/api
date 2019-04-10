@@ -9,6 +9,8 @@ class FileUploadView(APIView):
     # parser_classes = (parsers.MultiPartParser, )
 
     def post(self, request):
+        img_url = request.data["img_url"]
+        print('Image url', img_url)
         up_file = 'https://firebasestorage.googleapis.com/v0/b/kycapp-18ab0.appspot.com/o/id2.jpg?alt=media&token=623a27e4-d508-4024-b360-bc2126c5120d'
         # up_file = request.FILES['myfile']
         print('Faili', up_file)
