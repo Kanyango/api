@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.response import Response, JsonResponse
 from rest_framework import authentication, permissions
 from passporteye import read_mrz
 from rest_framework import parsers
@@ -17,6 +17,7 @@ class FileUploadView(APIView):
         mrz = read_mrz(up_file)
         pass_data = mrz.to_dict()
         print("Mrz fILE",pass_data["optional2"])
+        
         # destination = open('/Users/Username/' + up_file.name, 'wb+')
         # for chunk in up_file.chunks():
         #     destination.write(chunk)
@@ -24,4 +25,4 @@ class FileUploadView(APIView):
         # ...
         # do some stuff with uploaded file
         # ...
-        # return Response(mrz, status.HTTP_201_CREATED)
+       return JsonResponse(mrz, status.HTTP_201_CREATED)
