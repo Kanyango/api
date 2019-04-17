@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import parsers
 from rest_framework import status
 import json
-
+from . import serializers
 
 class FileUploadView(APIView):
     # parser_classes = (parsers.MultiPartParser, )
@@ -17,7 +17,14 @@ class FileUploadView(APIView):
         print('Faili', up_file)
         mrz = read_mrz(up_file)
         pass_data = mrz.to_dict()
+        mrz_data = {}
+        mrz_data["surname"] = pass_data["surname"]
+        mrz_data["sex"] = pass_data["sex"]
+        mrz_data["date_of_birth"] = pass_data["date_of_birth"]
+        mrz_data["optional2"] = pass_data["optional2"]
         print("Mrz fILE",pass_data["optional2"])
+        serializer = serializers.MrzSerializers(data=mrz_data)
+        serializer.is_valid()
         # destination = open('/Users/Username/' + up_file.name, 'wb+')
         # for chunk in up_file.chunks():
         #     destination.write(chunk)
@@ -25,5 +32,5 @@ class FileUploadView(APIView):
         # ...
         # do some stuff with uploaded file
         # ...
-        json_data = json.dumps(pass_data)
-        return JsonResponse(json_data, safe=False, status=200)
+        # json_data = json.dumps(pass_data)
+        return JsonResponse(serializer.data, safe=False, status=200)
